@@ -1,0 +1,18 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "master-page-solution-header-footer-application-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/masterPageSolutionHeaderFooter/MasterPageSolutionHeaderFooterApplicationCustomizer.js",
+          "manifest": "./src/extensions/masterPageSolutionHeaderFooter/MasterPageSolutionHeaderFooterApplicationCustomizer.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "MasterPageSolutionHeaderFooterApplicationCustomizerStrings": "lib/extensions/masterPageSolutionHeaderFooter/loc/{locale}.js"
+  }
+}
