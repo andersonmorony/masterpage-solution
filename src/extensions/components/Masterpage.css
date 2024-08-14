@@ -13,8 +13,14 @@
     background-color: #34A37E;
 }
 
-.ms-compositeHeader{
+.ms-compositeHeader, .ms-HorizontalNavItem-link.is-selected{
     padding: 0;
+}
+.ms-compositeHeader-siteAndActionsContainer {
+    margin: 0;
+}
+.ms-compositeHeader-headerAndNavContainer .ms-HorizontalNav {
+    margin: 0 10px;
 }
 
 #spSiteHeader [class*='titleSubcell'],
@@ -41,7 +47,7 @@
 #spSiteHeader .ms-HorizontalNavItem a span,
 #spSiteHeader .ms-HorizontalNavItem button,
 .ms-HorizontalNav .ms-HorizontalNavItem {
-    padding: 30px 20px;
+    padding: 22px 19px;
 }
 
 .ms-HorizontalNavItem .ms-HorizontalNavItem-link
@@ -49,7 +55,7 @@
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 19px;
     color: #FFFFFF;
     text-decoration: none;
@@ -139,15 +145,15 @@
     justify-content: space-between;
     align-items: center;
     padding: 0px 60px;
-    height: 98px;
+    height: 80px;
 }
 #header-body img.logo {
     width: 100%;
-    height: 54.99px;
+    height: 45.99px;
 }
 #header-body input {
     width: 385px;
-    height: 32px;
+    height: 26px;
     /* height: 56px; */    
     background-image: url('../images/pesquisa.svg');
     border: none;

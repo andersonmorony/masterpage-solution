@@ -28,16 +28,16 @@ const Header = () => {
                     </a>
                     <div className="right-side desktop">
                         <input type="text" placeholder="O que você procura neste site?" />
-                        <button className="btn-openmenu navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        {/* <button className="btn-openmenu navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                             <img className="" src={icon_hamb} alt="btn-menu" />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
                 <div className="right-side search-mobile">
                     <input type="text" placeholder="O que você procura?" />
-                    <button type="button" className="btn btn-clean-search">
+                    {/* <button type="button" className="btn btn-clean-search">
                         <img src={icon_close} alt="limpar" />
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>

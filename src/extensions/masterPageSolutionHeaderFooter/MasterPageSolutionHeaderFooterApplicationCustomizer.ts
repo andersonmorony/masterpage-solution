@@ -8,7 +8,6 @@ import {
   PlaceholderContent,
   PlaceholderName
 } from '@microsoft/sp-application-base';
-import { Dialog } from '@microsoft/sp-dialog';
 import Header from '../components/Header';
 
 import * as strings from 'MasterPageSolutionHeaderFooterApplicationCustomizerStrings';
