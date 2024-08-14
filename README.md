@@ -2,6 +2,16 @@
 
 This is where you include your WebPart documentation.
 
+How was install this project:
+
+
+Command: 
+npm install @microsoft/generator-sharepoint@1.4.1
+npx yo @microsoft/sharepoint
+
+Selected option online and then Extension, because this version dont have extension to sharepoint lower than sharepoint online.
+
+
 ### Building the code
 
 ```bash
