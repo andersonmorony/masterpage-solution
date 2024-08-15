@@ -39,14 +39,6 @@ export default class MasterPageSolutionHeaderFooterApplicationCustomizer
   }
 
   private _renderPlaceHolders(): void {
-    console.log("HelloWorldApplicationCustomizer._renderPlaceHolders()");
-    console.log(
-      "Available placeholders: ",
-      this.context.placeholderProvider.placeholderNames
-        .map(name => PlaceholderName[name])
-        .join(", ")
-    );
-  
     // Handling the top placeholder
     if (!this._topPlaceholder) {
       this._topPlaceholder = this.context.placeholderProvider.tryCreateContent(
@@ -67,11 +59,8 @@ export default class MasterPageSolutionHeaderFooterApplicationCustomizer
         }
   
         if (this._topPlaceholder.domElement) {
-          const element = React.createElement(Header, {
-            topString: topString // Replace with your actual string
-          });
-        
-          ReactDOM.render(element, this._topPlaceholder.domElement);
+          const header_element = React.createElement(Header, { context: this.context } );
+          ReactDOM.render(header_element, this._topPlaceholder.domElement);
         }
       }
     }
