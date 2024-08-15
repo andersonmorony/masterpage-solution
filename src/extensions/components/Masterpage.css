@@ -76,7 +76,7 @@
     align-items: center;
 }
 
-#link-rapido .links {
+#link-rapido .links div {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -100,6 +100,10 @@
     /* Pure/.pure */
 
     color: #FFFFFF;
+}
+
+#icons {
+    list-style: none;
 }
 
 #link-rapido .icons a {
@@ -232,6 +236,7 @@
     display: flex;
     margin: 0px;
     justify-content: end;
+    list-style: none;
 }
 
 /* Button up */

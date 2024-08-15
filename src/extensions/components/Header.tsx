@@ -3,12 +3,15 @@ import { sp } from '@pnp/sp';
 
 import './Masterpage.css'
 import './MasterpageMobile.css'
+import Links from './Links/Links';
+import Icon from './Icones/Icon';
 const icon_card = require('../images/cad.svg')
 const logo = require('../images/logo.png')
 
 export interface ImyState {
     links?: any []
     icones?: any []
+    ServerRelativeUrl: string;
 }
 
 export default class Header extends React.Component<{ context }, ImyState> {
@@ -22,7 +25,8 @@ export default class Header extends React.Component<{ context }, ImyState> {
 
         this.state = {
             links: [],
-            icones: []
+            icones: [],
+            ServerRelativeUrl: ''
         }
     }
 
@@ -46,8 +50,9 @@ export default class Header extends React.Component<{ context }, ImyState> {
                 const response = await items.get();
                 console.log(response)
 
-                const _links = response.filter((item) => !item.Attachments)
-                const _icons = response.filter((item) => item.Attachments)
+                const _links = response.filter((item) => { return item.AttachmentFiles.length < 1})
+                const _icons = response.filter((item) => { return item.AttachmentFiles.length > 0})
+                
                 this.setState({links: _links, icones: _icons })
 
             }catch(ex)
@@ -56,13 +61,20 @@ export default class Header extends React.Component<{ context }, ImyState> {
             }
         }
 
-    componentDidMount() {
-        this.getList();
+    async componentDidMount() {
+        await this.getList();
+        const sharepoint = await sp.web.get();
+        this.setState({ ServerRelativeUrl: sharepoint.ServerRelativeUrl })
+        console.log(sharepoint)
     }
 
     public render(): React.ReactElement<{}> {
 
-        const { icones, links } = this.state;
+        const { 
+            icones,
+            links,
+            ServerRelativeUrl
+        } = this.state;
 
         return (
             <div id="header">
@@ -72,42 +84,22 @@ export default class Header extends React.Component<{ context }, ImyState> {
                         <span>Cadastrar</span>
                     </button>
                     <ul id="icons" className="nav justify-content-end icons">
-                        {icones.length > 0 ? icones.map((icon) => {
-                            return (
-                                <div>
-                                    <a className="nav-link" aria-current="page" href={icon.Link.Url}>
-                                        {icon.Title}                            
-                                    </a>
-                                </div>
-                            )
-                        }): null }
+                        <Icon items={icones} />
                     </ul>
                     <ul id="links" className="nav justify-content-end links">
-                        {links.length > 0 ? links.map((link) => {
-                            return (
-                                <a className="nav-link" aria-current="page" href={link.Link.Url}>
-                                    {link.Title}                            
-                                </a>
-                            )
-                        }): null }
+                        <Links items={links} />
                     </ul>
                 </div>
                 <div className="containet-fluid" id="header-body">
-                    <a href="/sites/Procel/">
+                    <a href={ServerRelativeUrl}>
                         <img className="logo" src={logo} alt="Logo" />
                     </a>
                     <div className="right-side desktop">
                         <input type="text" placeholder="O que você procura neste site?" />
-                        {/* <button className="btn-openmenu navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                            <img className="" src={icon_hamb} alt="btn-menu" />
-                        </button> */}
                     </div>
                 </div>
                 <div className="right-side search-mobile">
                     <input type="text" placeholder="O que você procura?" />
-                    {/* <button type="button" className="btn btn-clean-search">
-                        <img src={icon_close} alt="limpar" />
-                    </button> */}
                 </div>
             </div>
         )
