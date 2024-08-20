@@ -66,36 +66,36 @@ export default class MasterPageSolutionHeaderFooterApplicationCustomizer
     }
   
     // Handling the bottom placeholder
-    if (!this._bottomPlaceholder) {
-      this._bottomPlaceholder = this.context.placeholderProvider.tryCreateContent(
-        PlaceholderName.Bottom,
-        { onDispose: this._onDispose }
-      );
+    // if (!this._bottomPlaceholder) {
+    //   this._bottomPlaceholder = this.context.placeholderProvider.tryCreateContent(
+    //     PlaceholderName.Bottom,
+    //     { onDispose: this._onDispose }
+    //   );
   
-      // The extension should not assume that the expected placeholder is available.
-      if (!this._bottomPlaceholder) {
-        console.error("The expected placeholder (Bottom) was not found.");
-        return;
-      }
+    //   // The extension should not assume that the expected placeholder is available.
+    //   if (!this._bottomPlaceholder) {
+    //     console.error("The expected placeholder (Bottom) was not found.");
+    //     return;
+    //   }
   
-      if (this.properties) {
-        let bottomString: string = this.properties.Bottom;
-        if (!bottomString) {
-          bottomString = "(Bottom property was not defined.)";
-        }
+      // if (this.properties) {
+      //   let bottomString: string = this.properties.Bottom;
+      //   if (!bottomString) {
+      //     bottomString = "(Bottom property was not defined.)";
+      //   }
   
-        if (this._bottomPlaceholder.domElement) {
-          this._bottomPlaceholder.domElement.innerHTML = `
-          <div class="">
-            <div class="">
-              <i class="ms-Icon ms-Icon--Info" aria-hidden="true"></i> ${escape(
-                bottomString
-              )}
-            </div>
-          </div>`;
-        }
-      }
-    }
+      //   if (this._bottomPlaceholder.domElement) {
+      //     this._bottomPlaceholder.domElement.innerHTML = `
+      //     <div class="">
+      //       <div class="">
+      //         <i class="ms-Icon ms-Icon--Info" aria-hidden="true"></i> ${escape(
+      //           bottomString
+      //         )}
+      //       </div>
+      //     </div>`;
+      //   }
+      // }
+    // }
   }
 
   @override

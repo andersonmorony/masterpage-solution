@@ -9,9 +9,10 @@ const icon_card = require('../images/cad.svg')
 const logo = require('../images/logo.png')
 
 export interface ImyState {
-    links?: any []
-    icones?: any []
+    links?: any [];
+    icones?: any [];
     ServerRelativeUrl: string;
+    redeSociais?: any [];
 }
 
 export default class Header extends React.Component<{ context }, ImyState> {
@@ -48,7 +49,6 @@ export default class Header extends React.Component<{ context }, ImyState> {
                 if (orderBy) items = items.orderBy(orderBy, isAscending);
         
                 const response = await items.get();
-                console.log(response)
 
                 const _links = response.filter((item) => { return item.AttachmentFiles.length < 1})
                 const _icons = response.filter((item) => { return item.AttachmentFiles.length > 0})
@@ -61,11 +61,53 @@ export default class Header extends React.Component<{ context }, ImyState> {
             }
         }
 
+    async getIconsNav() {
+        const listName = "Rede Sociais"
+        const filter = "Status eq 1";
+        const select = "*, AttachmentFiles";
+        const expand = "AttachmentFiles"
+        const orderBy = "Ordem";
+        const isAscending = true;
+
+        const list = sp.web.lists.getByTitle(listName);
+        let items = list.items;
+        if (filter) items = items.filter(filter);
+        if (select) items = items.select(select);
+        if (expand) items = items.expand(expand);
+        if (orderBy) items = items.orderBy(orderBy, isAscending);
+
+        const response = await items.get();
+        console.log(response)
+        this.setState({redeSociais: response });
+    }
+
     async componentDidMount() {
         await this.getList();
+        await this.getIconsNav();
         const sharepoint = await sp.web.get();
-        this.setState({ ServerRelativeUrl: sharepoint.ServerRelativeUrl })
-        console.log(sharepoint)
+        this.setState({ ServerRelativeUrl: sharepoint.ServerRelativeUrl });
+        this.InsertIconsOnNav();
+    }
+
+    async InsertIconsOnNav() {
+
+        const { redeSociais } = this.state;
+
+        const nav: HTMLElement = document.querySelector('.ms-HorizontalNav') as HTMLElement;
+
+        let HTML = `<ul id="nav-icons-rede-sociais">`;
+
+        redeSociais.map((rede) => {
+                HTML += ` <li class="nav">
+                <a class="nav-link" target="_blank" aria-current="page" href="${ rede.Link.Url }">
+                    ${ rede.Attachments ? `<img src="${ rede.AttachmentFiles[0].ServerRelativeUrl }" alt="${ rede.Title }" />` :  `<span>${ rede.Title }</span>` }
+                </a>
+            </li>`
+        });
+
+        HTML += `</ul>`;
+
+        nav.insertAdjacentHTML('beforeend', HTML);
     }
 
     public render(): React.ReactElement<{}> {
