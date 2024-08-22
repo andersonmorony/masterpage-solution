@@ -17,6 +17,8 @@ export interface ImyState {
 
 export default class Header extends React.Component<{ context }, ImyState> {
 
+    private lastScrollTop: number = 0;
+
     constructor(props) {
         super(props);
 
@@ -30,6 +32,18 @@ export default class Header extends React.Component<{ context }, ImyState> {
             ServerRelativeUrl: ''
         }
     }
+
+    private handleScroll(myElement: HTMLElement): void {
+        const header = document.querySelector('#header') as HTMLElement;
+        const scrollTop = myElement.scrollTop;
+
+        if (scrollTop > this.lastScrollTop) {
+            header.style.position = 'fixed'; // Garante que ele esteja fora da tela
+        } else if(scrollTop == 0) {
+            header.style.position = 'relative'; // Mostra o elemento novamente
+        }
+        this.lastScrollTop = scrollTop;
+      }
 
 
     async getList() {
@@ -77,7 +91,6 @@ export default class Header extends React.Component<{ context }, ImyState> {
         if (orderBy) items = items.orderBy(orderBy, isAscending);
 
         const response = await items.get();
-        console.log(response)
         this.setState({redeSociais: response });
     }
 
@@ -87,6 +100,12 @@ export default class Header extends React.Component<{ context }, ImyState> {
         const sharepoint = await sp.web.get();
         this.setState({ ServerRelativeUrl: sharepoint.ServerRelativeUrl });
         this.InsertIconsOnNav();
+        const el = document.querySelector('[class^="scrollRegion"]') ? document.querySelector('[class^="scrollRegion"]') : document.querySelector('[data-automation-id="contentScrollRegion"]')
+        if (!el) {
+            console.error("Elemento não encontrado");
+            return;
+        }
+        el.addEventListener('scroll', this.handleScroll.bind(this, el));
     }
 
     async InsertIconsOnNav() {
